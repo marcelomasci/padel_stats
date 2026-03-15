@@ -25,7 +25,17 @@
     padding: 12px 12px 6px;
   }
   header h1 { font-size: 1.1rem; font-weight: 700; color: #e0e0e0; }
-  header .date { font-size: 0.7rem; color: #888; margin-top: 2px; }
+  header .date-input {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    color: #aaa;
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    margin-top: 4px;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
 
   /* ── Set Tabs ── */
   .set-tabs {
@@ -265,7 +275,7 @@
 
 <header>
   <h1>Padel Stats — Drive</h1>
-  <div class="date" id="currentDate"></div>
+  <input type="datetime-local" class="date-input" id="matchDate">
 </header>
 
 <!-- Set Tabs -->
@@ -491,8 +501,10 @@ function resetMatch() {
 
   try {
     var history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+    var dateVal = document.getElementById('matchDate').value;
+    var matchDate = dateVal ? new Date(dateVal).toISOString() : new Date().toISOString();
     history.unshift({
-      date: new Date().toISOString(),
+      date: matchDate,
       sets: JSON.parse(JSON.stringify(match.sets))
     });
     localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
@@ -503,6 +515,7 @@ function resetMatch() {
   match = { currentSet: 0, sets: [emptySet()] };
   save();
   render();
+  setDateToNow();
 }
 
 function showHistory() {
@@ -570,9 +583,12 @@ function exportData() {
 }
 
 // Init
-document.getElementById('currentDate').textContent = new Date().toLocaleDateString('es-AR', {
-  weekday: 'long', day: 'numeric', month: 'long'
-});
+function setDateToNow() {
+  var now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  document.getElementById('matchDate').value = now.toISOString().slice(0, 16);
+}
+setDateToNow();
 load();
 </script>
 </body>
