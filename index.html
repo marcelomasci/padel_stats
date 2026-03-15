@@ -324,8 +324,8 @@
     <div class="sum-value" id="effectiveness">-</div>
   </div>
   <div class="summary-card">
-    <div class="sum-label">Total</div>
-    <div class="sum-value" id="total">0</div>
+    <div class="sum-label">Balance</div>
+    <div class="sum-value" id="balance">-</div>
   </div>
 </div>
 
@@ -406,8 +406,9 @@ function renderStats() {
 function renderSummary() {
   const s = currentSet().stats;
   const total = s.winners + s.errors + s.rally;
+  const balance = (s.winners + s.rally) - s.errors;
 
-  document.getElementById('total').textContent = total;
+  document.getElementById('balance').textContent = total > 0 ? (balance > 0 ? '+' + balance : balance) : '-';
 
   if (s.errors > 0) {
     document.getElementById('ratio').textContent = (s.winners / s.errors).toFixed(1);
