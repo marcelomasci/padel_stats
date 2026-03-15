@@ -100,44 +100,26 @@
   .stats-area {
     flex: 1;
     display: flex;
-    gap: 8px;
-    padding: 8px 10px;
-    overflow-y: auto;
-  }
-
-  .player-col {
-    flex: 1;
-    display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
+    padding: 10px 16px;
+    justify-content: center;
   }
-
-  .player-header {
-    text-align: center;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 6px 0;
-    border-radius: 8px;
-  }
-  .player-header.drive { background: #1a6b35; color: #6cf5a0; }
-  .player-header.reves { background: #7a3b10; color: #ffb86c; }
 
   .stat-card {
     background: #16213e;
-    border-radius: 12px;
-    padding: 6px;
+    border-radius: 14px;
+    padding: 8px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
   }
 
   .stat-btn {
     flex: 1;
-    height: 64px;
+    height: 80px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     font-weight: 700;
     color: #fff;
     cursor: pointer;
@@ -145,26 +127,26 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 4px;
     transition: transform 0.08s, filter 0.08s;
     -webkit-tap-highlight-color: transparent;
   }
   .stat-btn:active { transform: scale(0.94); filter: brightness(0.82); }
-  .stat-btn .count { font-size: 1.8rem; line-height: 1; }
-  .stat-btn .label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.3px; opacity: 0.85; }
+  .stat-btn .count { font-size: 2.4rem; line-height: 1; }
+  .stat-btn .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
 
   .btn-winner { background: #0d7377; }
   .btn-error { background: #c0392b; }
   .btn-rally { background: #2c3e80; }
 
   .undo-btn {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border: none;
     border-radius: 50%;
     background: rgba(255,255,255,0.06);
     color: #777;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
     flex-shrink: 0;
     display: flex;
@@ -178,7 +160,7 @@
   .summary {
     display: flex;
     gap: 8px;
-    padding: 0 10px;
+    padding: 0 16px;
     margin: 4px 0;
   }
   .summary-card {
@@ -197,8 +179,6 @@
     letter-spacing: 0.5px;
     color: #888;
   }
-  .summary-card .sum-label.drive { color: #6cf5a0; }
-  .summary-card .sum-label.reves { color: #ffb86c; }
   .summary-card .sum-value {
     font-size: 1.4rem;
     font-weight: 800;
@@ -268,7 +248,6 @@
   .hi-date { font-size: 1rem; color: #999; }
   .hi-score { font-size: 1.2rem; font-weight: 700; }
   .hi-details { font-size: 1rem; color: #ccc; margin-top: 6px; }
-  .hi-details .hi-player { font-weight: 600; margin-right: 6px; }
   .hi-w { color: #5ee6c8; }
   .hi-e { color: #ff7b7b; }
   .hi-r { color: #a0b4ff; }
@@ -285,7 +264,7 @@
 <body>
 
 <header>
-  <h1>Padel Stats</h1>
+  <h1>Padel Stats — Drive</h1>
   <div class="date" id="currentDate"></div>
 </header>
 
@@ -309,74 +288,44 @@
   </div>
 </div>
 
-<!-- Stats: Drive & Revés -->
+<!-- Stats -->
 <div class="stats-area">
-  <!-- Drive Column -->
-  <div class="player-col">
-    <div class="player-header drive">Drive</div>
-    <div class="stat-card">
-      <button class="stat-btn btn-winner" onclick="add('drive','winners')">
-        <div class="count" id="drive-winners">0</div>
-        <div class="label">Winners</div>
-      </button>
-      <button class="undo-btn" onclick="undo('drive','winners')">↩</button>
-    </div>
-    <div class="stat-card">
-      <button class="stat-btn btn-rally" onclick="add('drive','rally')">
-        <div class="count" id="drive-rally">0</div>
-        <div class="label">Rally</div>
-      </button>
-      <button class="undo-btn" onclick="undo('drive','rally')">↩</button>
-    </div>
-    <div class="stat-card">
-      <button class="stat-btn btn-error" onclick="add('drive','errors')">
-        <div class="count" id="drive-errors">0</div>
-        <div class="label">Errores NF</div>
-      </button>
-      <button class="undo-btn" onclick="undo('drive','errors')">↩</button>
-    </div>
+  <div class="stat-card">
+    <button class="stat-btn btn-winner" onclick="add('winners')">
+      <div class="count" id="winners-count">0</div>
+      <div class="label">Winners</div>
+    </button>
+    <button class="undo-btn" onclick="undo('winners')">↩</button>
   </div>
-
-  <!-- Revés Column -->
-  <div class="player-col">
-    <div class="player-header reves">Revés</div>
-    <div class="stat-card">
-      <button class="stat-btn btn-winner" onclick="add('reves','winners')">
-        <div class="count" id="reves-winners">0</div>
-        <div class="label">Winners</div>
-      </button>
-      <button class="undo-btn" onclick="undo('reves','winners')">↩</button>
-    </div>
-    <div class="stat-card">
-      <button class="stat-btn btn-rally" onclick="add('reves','rally')">
-        <div class="count" id="reves-rally">0</div>
-        <div class="label">Rally</div>
-      </button>
-      <button class="undo-btn" onclick="undo('reves','rally')">↩</button>
-    </div>
-    <div class="stat-card">
-      <button class="stat-btn btn-error" onclick="add('reves','errors')">
-        <div class="count" id="reves-errors">0</div>
-        <div class="label">Errores NF</div>
-      </button>
-      <button class="undo-btn" onclick="undo('reves','errors')">↩</button>
-    </div>
+  <div class="stat-card">
+    <button class="stat-btn btn-rally" onclick="add('rally')">
+      <div class="count" id="rally-count">0</div>
+      <div class="label">Rally</div>
+    </button>
+    <button class="undo-btn" onclick="undo('rally')">↩</button>
+  </div>
+  <div class="stat-card">
+    <button class="stat-btn btn-error" onclick="add('errors')">
+      <div class="count" id="errors-count">0</div>
+      <div class="label">Errores NF</div>
+    </button>
+    <button class="undo-btn" onclick="undo('errors')">↩</button>
   </div>
 </div>
 
 <!-- Summary -->
 <div class="summary">
   <div class="summary-card">
-    <div class="sum-label drive">Drive W/E</div>
-    <div class="sum-value" id="drive-ratio">-</div>
-  </div>
-  <div class="summary-card">
-    <div class="sum-label reves">Revés W/E</div>
-    <div class="sum-value" id="reves-ratio">-</div>
+    <div class="sum-label">W/E Ratio</div>
+    <div class="sum-value" id="ratio">-</div>
   </div>
   <div class="summary-card">
     <div class="sum-label">Efectividad</div>
     <div class="sum-value" id="effectiveness">-</div>
+  </div>
+  <div class="summary-card">
+    <div class="sum-label">Total</div>
+    <div class="sum-value" id="total">0</div>
   </div>
 </div>
 
@@ -398,14 +347,13 @@
 </div>
 
 <script>
-const STORAGE_KEY = 'padel_match_v2';
-const HISTORY_KEY = 'padel_history_v2';
+const STORAGE_KEY = 'padel_match_v3';
+const HISTORY_KEY = 'padel_history_v3';
 
 function emptySet() {
   return {
     games: { nos: 0, ellos: 0 },
-    drive: { winners: 0, errors: 0, rally: 0 },
-    reves: { winners: 0, errors: 0, rally: 0 }
+    stats: { winners: 0, errors: 0, rally: 0 }
   };
 }
 
@@ -436,10 +384,9 @@ function renderTabs() {
   const container = document.getElementById('setTabs');
   container.innerHTML = match.sets.map((s, i) => {
     const active = i === match.currentSet ? ' active' : '';
-    const score = `${s.games.nos}-${s.games.ellos}`;
-    return `<button class="set-tab${active}" onclick="switchSet(${i})">
-      Set ${i + 1}<span class="tab-score">(${score})</span>
-    </button>`;
+    const score = s.games.nos + '-' + s.games.ellos;
+    return '<button class="set-tab' + active + '" onclick="switchSet(' + i + ')">' +
+      'Set ' + (i + 1) + '<span class="tab-score">(' + score + ')</span></button>';
   }).join('');
 }
 
@@ -450,60 +397,49 @@ function renderScoreboard() {
 }
 
 function renderStats() {
-  const s = currentSet();
-  ['drive', 'reves'].forEach(player => {
-    ['winners', 'errors', 'rally'].forEach(stat => {
-      document.getElementById(`${player}-${stat}`).textContent = s[player][stat];
-    });
-  });
+  const s = currentSet().stats;
+  document.getElementById('winners-count').textContent = s.winners;
+  document.getElementById('errors-count').textContent = s.errors;
+  document.getElementById('rally-count').textContent = s.rally;
 }
 
 function renderSummary() {
-  const s = currentSet();
+  const s = currentSet().stats;
+  const total = s.winners + s.errors + s.rally;
 
-  // Drive W/E
-  if (s.drive.errors > 0) {
-    document.getElementById('drive-ratio').textContent = (s.drive.winners / s.drive.errors).toFixed(1);
+  document.getElementById('total').textContent = total;
+
+  if (s.errors > 0) {
+    document.getElementById('ratio').textContent = (s.winners / s.errors).toFixed(1);
   } else {
-    document.getElementById('drive-ratio').textContent = s.drive.winners > 0 ? '∞' : '-';
+    document.getElementById('ratio').textContent = s.winners > 0 ? '∞' : '-';
   }
 
-  // Revés W/E
-  if (s.reves.errors > 0) {
-    document.getElementById('reves-ratio').textContent = (s.reves.winners / s.reves.errors).toFixed(1);
-  } else {
-    document.getElementById('reves-ratio').textContent = s.reves.winners > 0 ? '∞' : '-';
-  }
-
-  // Effectiveness (pareja)
-  const totalW = s.drive.winners + s.reves.winners;
-  const totalR = s.drive.rally + s.reves.rally;
-  const totalE = s.drive.errors + s.reves.errors;
-  const total = totalW + totalR + totalE;
   if (total > 0) {
-    document.getElementById('effectiveness').textContent = ((totalW + totalR) / total * 100).toFixed(0) + '%';
+    document.getElementById('effectiveness').textContent =
+      ((s.winners + s.rally) / total * 100).toFixed(0) + '%';
   } else {
     document.getElementById('effectiveness').textContent = '-';
   }
 }
 
-function add(player, stat) {
-  currentSet()[player][stat]++;
+function add(stat) {
+  currentSet().stats[stat]++;
   save();
   render();
   vibrate();
 }
 
-function undo(player, stat) {
-  if (currentSet()[player][stat] > 0) {
-    currentSet()[player][stat]--;
+function undo(stat) {
+  if (currentSet().stats[stat] > 0) {
+    currentSet().stats[stat]--;
     save();
     render();
   }
 }
 
 function addGame(side, delta) {
-  const g = currentSet().games;
+  var g = currentSet().games;
   g[side] = Math.max(0, g[side] + delta);
   save();
   render();
@@ -521,7 +457,7 @@ function finishSet() {
     alert('Máximo 3 sets por partido');
     return;
   }
-  const s = currentSet();
+  var s = currentSet();
   if (s.games.nos === 0 && s.games.ellos === 0) return;
 
   match.sets.push(emptySet());
@@ -537,8 +473,7 @@ function vibrate() {
 function matchHasData() {
   try {
     return match.sets.some(function(s) {
-      return (s.drive.winners + s.drive.errors + s.drive.rally +
-              s.reves.winners + s.reves.errors + s.reves.rally +
+      return (s.stats.winners + s.stats.errors + s.stats.rally +
               s.games.nos + s.games.ellos) > 0;
     });
   } catch(e) {
@@ -570,43 +505,40 @@ function resetMatch() {
 }
 
 function showHistory() {
-  const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
-  const list = document.getElementById('historyList');
+  var history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+  var list = document.getElementById('historyList');
 
   if (history.length === 0) {
     list.innerHTML = '<p style="color:#888;text-align:center;padding:40px">Sin partidos guardados</p>';
   } else {
-    list.innerHTML = history.map((h, i) => {
-      const d = new Date(h.date);
-      const dateStr = d.toLocaleDateString('es-AR', { weekday: 'short', day: '2-digit', month: '2-digit', year: '2-digit' });
-      const scoreStr = h.sets.map(s => `${s.games.nos}-${s.games.ellos}`).join(' / ');
+    list.innerHTML = history.map(function(h, i) {
+      var d = new Date(h.date);
+      var dateStr = d.toLocaleDateString('es-AR', { weekday: 'short', day: '2-digit', month: '2-digit', year: '2-digit' });
+      var scoreStr = h.sets.map(function(s) { return s.games.nos + '-' + s.games.ellos; }).join(' / ');
 
-      const totals = h.sets.reduce((acc, s) => {
-        ['drive', 'reves'].forEach(p => {
-          ['winners', 'errors', 'rally'].forEach(k => { acc[p][k] += s[p][k]; });
-        });
+      var totals = h.sets.reduce(function(acc, s) {
+        acc.winners += s.stats.winners;
+        acc.errors += s.stats.errors;
+        acc.rally += s.stats.rally;
         return acc;
-      }, { drive: { winners:0, errors:0, rally:0 }, reves: { winners:0, errors:0, rally:0 } });
+      }, { winners: 0, errors: 0, rally: 0 });
 
-      return `<div class="history-item">
-        <div class="hi-header">
-          <span class="hi-date">${dateStr}</span>
-          <span class="hi-score">${scoreStr}</span>
-          <button class="hi-delete" onclick="deleteHistory(${i})">🗑</button>
-        </div>
-        <div class="hi-details">
-          <span class="hi-player" style="color:#6cf5a0">Drive:</span>
-          <span class="hi-w">W:${totals.drive.winners}</span>
-          <span class="hi-e">E:${totals.drive.errors}</span>
-          <span class="hi-r">R:${totals.drive.rally}</span>
-        </div>
-        <div class="hi-details">
-          <span class="hi-player" style="color:#ffb86c">Revés:</span>
-          <span class="hi-w">W:${totals.reves.winners}</span>
-          <span class="hi-e">E:${totals.reves.errors}</span>
-          <span class="hi-r">R:${totals.reves.rally}</span>
-        </div>
-      </div>`;
+      var total = totals.winners + totals.errors + totals.rally;
+      var eff = total > 0 ? ((totals.winners + totals.rally) / total * 100).toFixed(0) + '%' : '-';
+
+      return '<div class="history-item">' +
+        '<div class="hi-header">' +
+          '<span class="hi-date">' + dateStr + '</span>' +
+          '<span class="hi-score">' + scoreStr + '</span>' +
+          '<button class="hi-delete" onclick="deleteHistory(' + i + ')">🗑</button>' +
+        '</div>' +
+        '<div class="hi-details">' +
+          '<span class="hi-w">W:' + totals.winners + '</span> · ' +
+          '<span class="hi-e">E:' + totals.errors + '</span> · ' +
+          '<span class="hi-r">R:' + totals.rally + '</span> · ' +
+          'Ef: ' + eff +
+        '</div>' +
+      '</div>';
     }).join('');
   }
 
@@ -618,20 +550,20 @@ function hideHistory() {
 }
 
 function deleteHistory(index) {
-  const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+  var history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
   history.splice(index, 1);
   localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
   showHistory();
 }
 
 function exportData() {
-  const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
-  const data = { current: match, history };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
+  var history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+  var data = { current: match, history: history };
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
   a.href = url;
-  a.download = `padel_stats_${new Date().toISOString().slice(0,10)}.json`;
+  a.download = 'padel_stats_' + new Date().toISOString().slice(0,10) + '.json';
   a.click();
   URL.revokeObjectURL(url);
 }
