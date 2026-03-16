@@ -539,6 +539,9 @@ function showHistory() {
 
       var total = totals.winners + totals.errors + totals.rally;
       var eff = total > 0 ? ((totals.winners + totals.rally) / total * 100).toFixed(0) + '%' : '-';
+      var we = totals.errors > 0 ? (totals.winners / totals.errors).toFixed(1) : (totals.winners > 0 ? '∞' : '-');
+      var bal = total > 0 ? (totals.winners + totals.rally) - totals.errors : 0;
+      var balStr = total > 0 ? (bal > 0 ? '+' + bal : '' + bal) : '-';
 
       return '<div class="history-item">' +
         '<div class="hi-header">' +
@@ -549,8 +552,10 @@ function showHistory() {
         '<div class="hi-details">' +
           '<span class="hi-w">W:' + totals.winners + '</span> · ' +
           '<span class="hi-e">E:' + totals.errors + '</span> · ' +
-          '<span class="hi-r">R:' + totals.rally + '</span> · ' +
-          'Ef: ' + eff +
+          '<span class="hi-r">R:' + totals.rally + '</span>' +
+        '</div>' +
+        '<div class="hi-details">' +
+          'W/E: ' + we + ' · Ef: ' + eff + ' · Bal: ' + balStr +
         '</div>' +
       '</div>';
     }).join('');
