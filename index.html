@@ -22,9 +22,16 @@
   /* ── Header ── */
   header {
     text-align: center;
-    padding: 10px 12px 4px;
+    padding: 8px 12px 4px;
   }
-  header h1 { font-size: 1.1rem; font-weight: 700; color: #e0e0e0; }
+  .header-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+  }
+  .header-line h1 { font-size: 1rem; font-weight: 700; color: #e0e0e0; }
+  .header-line .meta { font-size: 0.7rem; color: #888; }
   header .date-input {
     background: none;
     border: 1px solid rgba(255,255,255,0.12);
@@ -109,11 +116,16 @@
   /* ── Stats Area ── */
   .stats-area {
     flex: 1;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 6px;
     padding: 6px 12px;
-    justify-content: center;
+    align-content: center;
+  }
+  .stats-area .stat-card:last-child {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    justify-self: center;
   }
 
   .stat-card {
@@ -122,12 +134,14 @@
     padding: 5px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
+    position: relative;
   }
 
   .stat-btn {
     flex: 1;
-    height: 58px;
+    aspect-ratio: auto;
+    height: 72px;
     border: none;
     border-radius: 10px;
     font-weight: 700;
@@ -142,7 +156,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   .stat-btn:active { transform: scale(0.94); filter: brightness(0.82); }
-  .stat-btn .count { font-size: 1.8rem; line-height: 1; }
+  .stat-btn .count { font-size: 2rem; line-height: 1; }
   .stat-btn .label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.3px; opacity: 0.85; }
 
   .btn-winner { background: #0d7377; }
@@ -152,13 +166,13 @@
   .btn-br { background: #b5651d; }
 
   .undo-btn {
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     border: none;
     border-radius: 50%;
     background: rgba(255,255,255,0.06);
     color: #777;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     cursor: pointer;
     flex-shrink: 0;
     display: flex;
@@ -199,20 +213,21 @@
 
   /* ── Footer ── */
   footer {
-    padding: 8px 12px 4px;
+    padding: 6px 8px 4px;
     display: flex;
-    gap: 8px;
+    gap: 4px;
     justify-content: center;
-    flex-wrap: wrap;
   }
   footer button {
-    padding: 8px 14px;
+    padding: 7px 0;
+    flex: 1;
     border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
+    border-radius: 8px;
     background: rgba(255,255,255,0.04);
     color: #aaa;
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     cursor: pointer;
+    text-align: center;
     -webkit-tap-highlight-color: transparent;
   }
   footer button:active { background: rgba(255,255,255,0.1); }
@@ -280,7 +295,7 @@
     margin-bottom: 20px;
   }
   .help-section h2 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #e0e0e0;
     margin-bottom: 8px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -305,7 +320,7 @@
     color: #fff;
   }
   .help-text {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: #ccc;
     line-height: 1.4;
   }
@@ -314,7 +329,7 @@
     background: #16213e;
     border-radius: 8px;
     padding: 10px 12px;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: #ccc;
     margin-bottom: 8px;
     line-height: 1.5;
@@ -325,7 +340,7 @@
     border-left: 3px solid #0d7377;
     border-radius: 0 8px 8px 0;
     padding: 10px 12px;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: #ccc;
     line-height: 1.4;
   }
@@ -334,7 +349,10 @@
 <body>
 
 <header>
-  <h1>Padel Stats — Drive <span style="font-size:0.85rem;color:#bbb;font-weight:400">v3.0</span></h1>
+  <div class="header-line">
+    <h1>Padel Stats — Drive</h1>
+    <span class="meta">v3.0 · &copy; 2026 Marcelo Masci</span>
+  </div>
   <input type="datetime-local" class="date-input" id="matchDate">
 </header>
 
@@ -358,7 +376,7 @@
   </div>
 </div>
 
-<!-- Stats -->
+<!-- Stats: grid 2-2-1 -->
 <div class="stats-area">
   <div class="stat-card">
     <button class="stat-btn btn-winner" onclick="add('winners')">
@@ -382,18 +400,18 @@
     <button class="undo-btn" onclick="undo('errors')">↩</button>
   </div>
   <div class="stat-card">
-    <button class="stat-btn btn-ef" onclick="add('ef')">
-      <div class="count" id="ef-count">0</div>
-      <div class="label">Error Forz</div>
-    </button>
-    <button class="undo-btn" onclick="undo('ef')">↩</button>
-  </div>
-  <div class="stat-card">
     <button class="stat-btn btn-br" onclick="add('br')">
       <div class="count" id="br-count">0</div>
       <div class="label">Bola Reg</div>
     </button>
     <button class="undo-btn" onclick="undo('br')">↩</button>
+  </div>
+  <div class="stat-card">
+    <button class="stat-btn btn-ef" onclick="add('ef')">
+      <div class="count" id="ef-count">0</div>
+      <div class="label">Error Forzado</div>
+    </button>
+    <button class="undo-btn" onclick="undo('ef')">↩</button>
   </div>
 </div>
 
@@ -422,8 +440,6 @@
   <button onclick="showHelp()">Ayuda</button>
 </footer>
 
-<div style="text-align:center;padding:4px 0 10px;font-size:0.85rem;color:#bbb">&copy; 2026 Marcelo Masci</div>
-
 <!-- History Panel -->
 <div class="panel" id="historyPanel">
   <header>
@@ -442,7 +458,7 @@
   <div class="panel-body">
     <div class="help-section">
       <h2>Qué registrar</h2>
-      <p style="font-size:0.85rem;color:#ccc;margin-bottom:12px">
+      <p style="font-size:0.95rem;color:#ccc;margin-bottom:12px">
         Registrá toda intervención tuya que sea relevante para el resultado del punto. No hace falta registrar puntos donde no tocaste la pelota.
       </p>
     </div>
