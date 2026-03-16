@@ -118,32 +118,20 @@
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     gap: 6px;
     padding: 6px 12px;
     align-content: center;
   }
-  .stats-area .stat-card:last-child {
+  .stats-area .stat-btn:nth-child(5) {
     grid-column: 1 / -1;
     max-width: 50%;
     justify-self: center;
   }
 
-  .stat-card {
-    background: #16213e;
-    border-radius: 12px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    position: relative;
-  }
-
   .stat-btn {
-    flex: 1;
-    aspect-ratio: auto;
-    height: 72px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     font-weight: 700;
     color: #fff;
     cursor: pointer;
@@ -151,36 +139,22 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 4px;
+    min-height: 90px;
     transition: transform 0.08s, filter 0.08s;
     -webkit-tap-highlight-color: transparent;
   }
-  .stat-btn:active { transform: scale(0.94); filter: brightness(0.82); }
-  .stat-btn .count { font-size: 2rem; line-height: 1; }
-  .stat-btn .label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.3px; opacity: 0.85; }
+  .stat-btn:active { transform: scale(0.96); }
+  .stat-btn.holding { filter: brightness(0.6); }
+  .stat-btn .count { font-size: 2.6rem; line-height: 1; }
+  .stat-btn .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
+  .stat-btn .hint { font-size: 0.5rem; opacity: 0.4; margin-top: 2px; }
 
   .btn-winner { background: #0d7377; }
   .btn-rally { background: #2c3e80; }
   .btn-error { background: #c0392b; }
   .btn-ef { background: #4a4a6a; }
   .btn-br { background: #b5651d; }
-
-  .undo-btn {
-    width: 30px;
-    height: 30px;
-    border: none;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.06);
-    color: #777;
-    font-size: 0.8rem;
-    cursor: pointer;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .undo-btn:active { background: rgba(255,255,255,0.14); }
 
   /* ── Summary ── */
   .summary {
@@ -226,6 +200,8 @@
     background: rgba(255,255,255,0.04);
     color: #aaa;
     font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
     cursor: pointer;
     text-align: center;
     -webkit-tap-highlight-color: transparent;
@@ -376,43 +352,33 @@
   </div>
 </div>
 
-<!-- Stats: grid 2-2-1 -->
+<!-- Stats: grid 2-2-1, long press to undo -->
 <div class="stats-area">
-  <div class="stat-card">
-    <button class="stat-btn btn-winner" onclick="add('winners')">
-      <div class="count" id="winners-count">0</div>
-      <div class="label">Winners</div>
-    </button>
-    <button class="undo-btn" onclick="undo('winners')">↩</button>
-  </div>
-  <div class="stat-card">
-    <button class="stat-btn btn-rally" onclick="add('rally')">
-      <div class="count" id="rally-count">0</div>
-      <div class="label">Rally</div>
-    </button>
-    <button class="undo-btn" onclick="undo('rally')">↩</button>
-  </div>
-  <div class="stat-card">
-    <button class="stat-btn btn-error" onclick="add('errors')">
-      <div class="count" id="errors-count">0</div>
-      <div class="label">Errores NF</div>
-    </button>
-    <button class="undo-btn" onclick="undo('errors')">↩</button>
-  </div>
-  <div class="stat-card">
-    <button class="stat-btn btn-br" onclick="add('br')">
-      <div class="count" id="br-count">0</div>
-      <div class="label">Bola Reg</div>
-    </button>
-    <button class="undo-btn" onclick="undo('br')">↩</button>
-  </div>
-  <div class="stat-card">
-    <button class="stat-btn btn-ef" onclick="add('ef')">
-      <div class="count" id="ef-count">0</div>
-      <div class="label">Error Forzado</div>
-    </button>
-    <button class="undo-btn" onclick="undo('ef')">↩</button>
-  </div>
+  <button class="stat-btn btn-winner" data-stat="winners">
+    <div class="count" id="winners-count">0</div>
+    <div class="label">Winners</div>
+    <div class="hint">mantener = restar</div>
+  </button>
+  <button class="stat-btn btn-rally" data-stat="rally">
+    <div class="count" id="rally-count">0</div>
+    <div class="label">Rally</div>
+    <div class="hint">mantener = restar</div>
+  </button>
+  <button class="stat-btn btn-error" data-stat="errors">
+    <div class="count" id="errors-count">0</div>
+    <div class="label">Errores NF</div>
+    <div class="hint">mantener = restar</div>
+  </button>
+  <button class="stat-btn btn-br" data-stat="br">
+    <div class="count" id="br-count">0</div>
+    <div class="label">Bola Reg</div>
+    <div class="hint">mantener = restar</div>
+  </button>
+  <button class="stat-btn btn-ef" data-stat="ef">
+    <div class="count" id="ef-count">0</div>
+    <div class="label">Error Forzado</div>
+    <div class="hint">mantener = restar</div>
+  </button>
 </div>
 
 <!-- Summary -->
@@ -507,6 +473,7 @@
     <div class="help-section">
       <h2>Tips</h2>
       <div class="help-tip">
+        <strong>Tap</strong> = sumar punto. <strong>Mantener apretado</strong> (medio segundo) = restar punto.<br><br>
         Registrá en el <strong>cambio de lado</strong> (cada 2 games). Recordá los últimos puntos y cargalos. No hace falta registrar en tiempo real.<br><br>
         Los <strong>EF</strong> no afectan tus métricas — solo sirven para tener el cuadro completo de tus intervenciones.
       </div>
@@ -625,8 +592,59 @@ function undo(stat) {
     currentSet().stats[stat]--;
     save();
     render();
+    vibrate();
   }
 }
+
+// Long press handling for stat buttons
+(function() {
+  var holdTimer = null;
+  var didHold = false;
+  var HOLD_MS = 500;
+
+  document.querySelectorAll('.stat-btn[data-stat]').forEach(function(btn) {
+    var stat = btn.getAttribute('data-stat');
+
+    function startHold(e) {
+      didHold = false;
+      btn.classList.add('holding');
+      holdTimer = setTimeout(function() {
+        didHold = true;
+        btn.classList.remove('holding');
+        undo(stat);
+      }, HOLD_MS);
+    }
+
+    function endHold(e) {
+      btn.classList.remove('holding');
+      if (holdTimer) {
+        clearTimeout(holdTimer);
+        holdTimer = null;
+      }
+      if (!didHold) {
+        add(stat);
+      }
+      didHold = false;
+    }
+
+    function cancelHold(e) {
+      btn.classList.remove('holding');
+      if (holdTimer) {
+        clearTimeout(holdTimer);
+        holdTimer = null;
+      }
+      didHold = false;
+    }
+
+    btn.addEventListener('touchstart', function(e) { e.preventDefault(); startHold(e); }, { passive: false });
+    btn.addEventListener('touchend', endHold);
+    btn.addEventListener('touchcancel', cancelHold);
+    // Mouse fallback
+    btn.addEventListener('mousedown', startHold);
+    btn.addEventListener('mouseup', endHold);
+    btn.addEventListener('mouseleave', cancelHold);
+  });
+})();
 
 function addGame(side, delta) {
   var g = currentSet().games;
