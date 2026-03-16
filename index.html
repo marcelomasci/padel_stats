@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Padel Stats v2.1</title>
+<title>Padel Stats v3.0</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -22,7 +22,7 @@
   /* ── Header ── */
   header {
     text-align: center;
-    padding: 12px 12px 6px;
+    padding: 10px 12px 4px;
   }
   header h1 { font-size: 1.1rem; font-weight: 700; color: #e0e0e0; }
   header .date-input {
@@ -41,16 +41,16 @@
   .set-tabs {
     display: flex;
     gap: 4px;
-    padding: 6px 16px;
+    padding: 4px 16px;
     justify-content: center;
   }
   .set-tab {
-    padding: 6px 18px;
+    padding: 5px 16px;
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 8px;
     background: rgba(255,255,255,0.04);
     color: #888;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 600;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -61,9 +61,9 @@
     border-color: #0f3460;
   }
   .set-tab .tab-score {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     opacity: 0.7;
-    margin-left: 4px;
+    margin-left: 3px;
   }
 
   /* ── Scoreboard ── */
@@ -71,32 +71,32 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 8px 16px;
-    margin: 4px 16px;
+    gap: 10px;
+    padding: 6px 16px;
+    margin: 2px 16px;
     background: #16213e;
     border-radius: 12px;
   }
   .score-side {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
-  .score-label { font-size: 0.75rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; }
+  .score-label { font-size: 0.7rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; }
   .score-games {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 800;
-    min-width: 36px;
+    min-width: 30px;
     text-align: center;
   }
   .score-btn {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border: none;
     border-radius: 50%;
     background: rgba(255,255,255,0.08);
     color: #ccc;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -104,32 +104,32 @@
     -webkit-tap-highlight-color: transparent;
   }
   .score-btn:active { background: rgba(255,255,255,0.18); }
-  .score-vs { font-size: 0.9rem; color: #555; font-weight: 700; }
+  .score-vs { font-size: 0.8rem; color: #555; font-weight: 700; }
 
   /* ── Stats Area ── */
   .stats-area {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 10px 16px;
+    gap: 6px;
+    padding: 6px 12px;
     justify-content: center;
   }
 
   .stat-card {
     background: #16213e;
-    border-radius: 14px;
-    padding: 8px;
+    border-radius: 12px;
+    padding: 5px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
 
   .stat-btn {
     flex: 1;
-    height: 80px;
+    height: 58px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     font-weight: 700;
     color: #fff;
     cursor: pointer;
@@ -137,26 +137,28 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 2px;
     transition: transform 0.08s, filter 0.08s;
     -webkit-tap-highlight-color: transparent;
   }
   .stat-btn:active { transform: scale(0.94); filter: brightness(0.82); }
-  .stat-btn .count { font-size: 2.4rem; line-height: 1; }
-  .stat-btn .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
+  .stat-btn .count { font-size: 1.8rem; line-height: 1; }
+  .stat-btn .label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.3px; opacity: 0.85; }
 
   .btn-winner { background: #0d7377; }
-  .btn-error { background: #c0392b; }
   .btn-rally { background: #2c3e80; }
+  .btn-error { background: #c0392b; }
+  .btn-ef { background: #4a4a6a; }
+  .btn-br { background: #b5651d; }
 
   .undo-btn {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border: none;
     border-radius: 50%;
     background: rgba(255,255,255,0.06);
     color: #777;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     flex-shrink: 0;
     display: flex;
@@ -169,52 +171,53 @@
   /* ── Summary ── */
   .summary {
     display: flex;
-    gap: 8px;
-    padding: 0 16px;
-    margin: 4px 0;
+    gap: 6px;
+    padding: 0 12px;
+    margin: 2px 0;
   }
   .summary-card {
     flex: 1;
     background: #16213e;
     border-radius: 10px;
-    padding: 8px 6px;
+    padding: 6px 4px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
   }
   .summary-card .sum-label {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     color: #888;
   }
   .summary-card .sum-value {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 800;
     color: #fff;
   }
 
   /* ── Footer ── */
   footer {
-    padding: 10px 14px 18px;
+    padding: 8px 12px 4px;
     display: flex;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
+    flex-wrap: wrap;
   }
   footer button {
-    padding: 10px 18px;
+    padding: 8px 14px;
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 10px;
     background: rgba(255,255,255,0.04);
     color: #aaa;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
   }
   footer button:active { background: rgba(255,255,255,0.1); }
 
-  /* ── History Panel ── */
+  /* ── Panels ── */
   .panel {
     display: none;
     position: fixed;
@@ -257,10 +260,12 @@
   }
   .hi-date { font-size: 1rem; color: #999; }
   .hi-score { font-size: 1.2rem; font-weight: 700; }
-  .hi-details { font-size: 1rem; color: #ccc; margin-top: 6px; }
+  .hi-details { font-size: 0.95rem; color: #ccc; margin-top: 4px; }
   .hi-w { color: #5ee6c8; }
-  .hi-e { color: #ff7b7b; }
   .hi-r { color: #a0b4ff; }
+  .hi-e { color: #ff7b7b; }
+  .hi-ef { color: #9a9abf; }
+  .hi-br { color: #e8a54b; }
   .hi-delete {
     background: none;
     border: none;
@@ -269,12 +274,67 @@
     cursor: pointer;
     padding: 4px 8px;
   }
+
+  /* ── Help Panel ── */
+  .help-section {
+    margin-bottom: 20px;
+  }
+  .help-section h2 {
+    font-size: 1rem;
+    color: #e0e0e0;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 4px;
+  }
+  .help-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .help-badge {
+    flex-shrink: 0;
+    width: 40px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .help-text {
+    font-size: 0.85rem;
+    color: #ccc;
+    line-height: 1.4;
+  }
+  .help-text strong { color: #fff; }
+  .help-formula {
+    background: #16213e;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    color: #ccc;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .help-formula code { color: #5ee6c8; }
+  .help-tip {
+    background: rgba(13,115,119,0.15);
+    border-left: 3px solid #0d7377;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    color: #ccc;
+    line-height: 1.4;
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Padel Stats — Drive <span style="font-size:0.85rem;color:#bbb;font-weight:400">v2.1</span></h1>
+  <h1>Padel Stats — Drive <span style="font-size:0.85rem;color:#bbb;font-weight:400">v3.0</span></h1>
   <input type="datetime-local" class="date-input" id="matchDate">
 </header>
 
@@ -321,12 +381,26 @@
     </button>
     <button class="undo-btn" onclick="undo('errors')">↩</button>
   </div>
+  <div class="stat-card">
+    <button class="stat-btn btn-ef" onclick="add('ef')">
+      <div class="count" id="ef-count">0</div>
+      <div class="label">Error Forz</div>
+    </button>
+    <button class="undo-btn" onclick="undo('ef')">↩</button>
+  </div>
+  <div class="stat-card">
+    <button class="stat-btn btn-br" onclick="add('br')">
+      <div class="count" id="br-count">0</div>
+      <div class="label">Bola Reg</div>
+    </button>
+    <button class="undo-btn" onclick="undo('br')">↩</button>
+  </div>
 </div>
 
 <!-- Summary -->
 <div class="summary">
   <div class="summary-card">
-    <div class="sum-label">W/E Ratio</div>
+    <div class="sum-label">W/E</div>
     <div class="sum-value" id="ratio">-</div>
   </div>
   <div class="summary-card">
@@ -345,6 +419,7 @@
   <button onclick="resetMatch()">Nuevo partido</button>
   <button onclick="showHistory()">Historial</button>
   <button onclick="exportData()">Exportar</button>
+  <button onclick="showHelp()">Ayuda</button>
 </footer>
 
 <div style="text-align:center;padding:4px 0 10px;font-size:0.85rem;color:#bbb">&copy; 2026 Marcelo Masci</div>
@@ -358,22 +433,97 @@
   <div class="panel-body" id="historyList"></div>
 </div>
 
+<!-- Help Panel -->
+<div class="panel" id="helpPanel">
+  <header>
+    <h1>Ayuda</h1>
+    <button class="close-btn" onclick="hideHelp()">✕</button>
+  </header>
+  <div class="panel-body">
+    <div class="help-section">
+      <h2>Qué registrar</h2>
+      <p style="font-size:0.85rem;color:#ccc;margin-bottom:12px">
+        Registrá toda intervención tuya que sea relevante para el resultado del punto. No hace falta registrar puntos donde no tocaste la pelota.
+      </p>
+    </div>
+
+    <div class="help-section">
+      <h2>Botones</h2>
+
+      <div class="help-item">
+        <div class="help-badge" style="background:#0d7377">W</div>
+        <div class="help-text"><strong>Winner</strong> — Tu jugada ganó el punto directamente. Volea ganadora, passing, dejada que no llegaron.</div>
+      </div>
+
+      <div class="help-item">
+        <div class="help-badge" style="background:#2c3e80">R</div>
+        <div class="help-text"><strong>Rally</strong> — Punto ganado por construcción. Tu globo profundo, chiquita o devolución forzó el error del rival.</div>
+      </div>
+
+      <div class="help-item">
+        <div class="help-badge" style="background:#c0392b">ENF</div>
+        <div class="help-text"><strong>Error No Forzado</strong> — Tu pelota no entró o se fue. Tenías opción de jugarla mejor. Red, fuera, doble falta.</div>
+      </div>
+
+      <div class="help-item">
+        <div class="help-badge" style="background:#4a4a6a">EF</div>
+        <div class="help-text"><strong>Error Forzado</strong> — El rival te ganó el punto. Winner del rival, pelota que no pudiste alcanzar. No es culpa tuya.</div>
+      </div>
+
+      <div class="help-item">
+        <div class="help-badge" style="background:#b5651d">BR</div>
+        <div class="help-text"><strong>Bola Regalada</strong> — Tu pelota entró pero fue débil (globo corto, volea floja) y el rival la definió fácil. Es culpa tuya aunque la pelota entró.</div>
+      </div>
+    </div>
+
+    <div class="help-section">
+      <h2>Indicadores</h2>
+      <div class="help-formula">
+        <code>W/E</code> = Winners / (ENF + BR)<br>
+        Ratio de winners vs errores controlables. Más alto = mejor.<br><br>
+        <code>Efectividad</code> = (W + R) / (W + R + ENF + BR) × 100<br>
+        % de puntos positivos sobre el total controlable. EF no cuenta.<br><br>
+        <code>Balance</code> = (W + R) - (ENF + BR)<br>
+        Diferencia neta. Positivo = aportás, negativo = regalás.
+      </div>
+    </div>
+
+    <div class="help-section">
+      <h2>Tips</h2>
+      <div class="help-tip">
+        Registrá en el <strong>cambio de lado</strong> (cada 2 games). Recordá los últimos puntos y cargalos. No hace falta registrar en tiempo real.<br><br>
+        Los <strong>EF</strong> no afectan tus métricas — solo sirven para tener el cuadro completo de tus intervenciones.
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-const STORAGE_KEY = 'padel_match_v3';
-const HISTORY_KEY = 'padel_history_v3';
+var STORAGE_KEY = 'padel_match_v3';
+var HISTORY_KEY = 'padel_history_v3';
 
 function emptySet() {
   return {
     games: { nos: 0, ellos: 0 },
-    stats: { winners: 0, errors: 0, rally: 0 }
+    stats: { winners: 0, rally: 0, errors: 0, ef: 0, br: 0 }
   };
 }
 
-let match = { currentSet: 0, sets: [emptySet()] };
+// Retrocompatibilidad: asegurar que ef y br existan
+function fixStats(s) {
+  s.ef = s.ef || 0;
+  s.br = s.br || 0;
+  return s;
+}
+
+var match = { currentSet: 0, sets: [emptySet()] };
 
 function load() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) match = JSON.parse(saved);
+  var saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    match = JSON.parse(saved);
+    match.sets.forEach(function(s) { fixStats(s.stats); });
+  }
   render();
 }
 
@@ -393,44 +543,55 @@ function render() {
 }
 
 function renderTabs() {
-  const container = document.getElementById('setTabs');
-  container.innerHTML = match.sets.map((s, i) => {
-    const active = i === match.currentSet ? ' active' : '';
-    const score = s.games.nos + '-' + s.games.ellos;
+  var container = document.getElementById('setTabs');
+  container.innerHTML = match.sets.map(function(s, i) {
+    var active = i === match.currentSet ? ' active' : '';
+    var score = s.games.nos + '-' + s.games.ellos;
     return '<button class="set-tab' + active + '" onclick="switchSet(' + i + ')">' +
       'Set ' + (i + 1) + '<span class="tab-score">(' + score + ')</span></button>';
   }).join('');
 }
 
 function renderScoreboard() {
-  const s = currentSet();
+  var s = currentSet();
   document.getElementById('games-nos').textContent = s.games.nos;
   document.getElementById('games-ellos').textContent = s.games.ellos;
 }
 
 function renderStats() {
-  const s = currentSet().stats;
+  var s = currentSet().stats;
   document.getElementById('winners-count').textContent = s.winners;
-  document.getElementById('errors-count').textContent = s.errors;
   document.getElementById('rally-count').textContent = s.rally;
+  document.getElementById('errors-count').textContent = s.errors;
+  document.getElementById('ef-count').textContent = s.ef;
+  document.getElementById('br-count').textContent = s.br;
 }
 
 function renderSummary() {
-  const s = currentSet().stats;
-  const total = s.winners + s.errors + s.rally;
-  const balance = (s.winners + s.rally) - s.errors;
+  var s = currentSet().stats;
+  var controlable = s.winners + s.rally + s.errors + s.br;
+  var errCtrl = s.errors + s.br;
+  var buenos = s.winners + s.rally;
+  var balance = buenos - errCtrl;
 
-  document.getElementById('balance').textContent = total > 0 ? (balance > 0 ? '+' + balance : balance) : '-';
+  // Balance
+  if (controlable > 0) {
+    document.getElementById('balance').textContent = balance > 0 ? '+' + balance : '' + balance;
+  } else {
+    document.getElementById('balance').textContent = '-';
+  }
 
-  if (s.errors > 0) {
-    document.getElementById('ratio').textContent = (s.winners / s.errors).toFixed(1);
+  // W/E ratio
+  if (errCtrl > 0) {
+    document.getElementById('ratio').textContent = (s.winners / errCtrl).toFixed(1);
   } else {
     document.getElementById('ratio').textContent = s.winners > 0 ? '∞' : '-';
   }
 
-  if (total > 0) {
+  // Efectividad
+  if (controlable > 0) {
     document.getElementById('effectiveness').textContent =
-      ((s.winners + s.rally) / total * 100).toFixed(0) + '%';
+      (buenos / controlable * 100).toFixed(0) + '%';
   } else {
     document.getElementById('effectiveness').textContent = '-';
   }
@@ -486,7 +647,8 @@ function vibrate() {
 function matchHasData() {
   try {
     return match.sets.some(function(s) {
-      return (s.stats.winners + s.stats.errors + s.stats.rally +
+      var st = s.stats;
+      return (st.winners + st.rally + st.errors + (st.ef || 0) + (st.br || 0) +
               s.games.nos + s.games.ellos) > 0;
     });
   } catch(e) {
@@ -533,17 +695,22 @@ function showHistory() {
       var scoreStr = h.sets.map(function(s) { return s.games.nos + '-' + s.games.ellos; }).join(' / ');
 
       var totals = h.sets.reduce(function(acc, s) {
+        fixStats(s.stats);
         acc.winners += s.stats.winners;
-        acc.errors += s.stats.errors;
         acc.rally += s.stats.rally;
+        acc.errors += s.stats.errors;
+        acc.ef += (s.stats.ef || 0);
+        acc.br += (s.stats.br || 0);
         return acc;
-      }, { winners: 0, errors: 0, rally: 0 });
+      }, { winners: 0, rally: 0, errors: 0, ef: 0, br: 0 });
 
-      var total = totals.winners + totals.errors + totals.rally;
-      var eff = total > 0 ? ((totals.winners + totals.rally) / total * 100).toFixed(0) + '%' : '-';
-      var we = totals.errors > 0 ? (totals.winners / totals.errors).toFixed(1) : (totals.winners > 0 ? '∞' : '-');
-      var bal = total > 0 ? (totals.winners + totals.rally) - totals.errors : 0;
-      var balStr = total > 0 ? (bal > 0 ? '+' + bal : '' + bal) : '-';
+      var errCtrl = totals.errors + totals.br;
+      var buenos = totals.winners + totals.rally;
+      var controlable = buenos + errCtrl;
+      var eff = controlable > 0 ? (buenos / controlable * 100).toFixed(0) + '%' : '-';
+      var we = errCtrl > 0 ? (totals.winners / errCtrl).toFixed(1) : (totals.winners > 0 ? '∞' : '-');
+      var bal = controlable > 0 ? buenos - errCtrl : 0;
+      var balStr = controlable > 0 ? (bal > 0 ? '+' + bal : '' + bal) : '-';
 
       return '<div class="history-item">' +
         '<div class="hi-header">' +
@@ -554,7 +721,9 @@ function showHistory() {
         '<div class="hi-details">' +
           '<span class="hi-w">W:' + totals.winners + '</span> · ' +
           '<span class="hi-r">R:' + totals.rally + '</span> · ' +
-          '<span class="hi-e">E:' + totals.errors + '</span>' +
+          '<span class="hi-e">ENF:' + totals.errors + '</span> · ' +
+          '<span class="hi-ef">EF:' + totals.ef + '</span> · ' +
+          '<span class="hi-br">BR:' + totals.br + '</span>' +
         '</div>' +
         '<div class="hi-details">' +
           'W/E: ' + we + ' · Ef: ' + eff + ' · Bal: ' + balStr +
@@ -587,6 +756,14 @@ function exportData() {
   a.download = 'padel_stats_' + new Date().toISOString().slice(0,10) + '.json';
   a.click();
   URL.revokeObjectURL(url);
+}
+
+function showHelp() {
+  document.getElementById('helpPanel').classList.add('active');
+}
+
+function hideHelp() {
+  document.getElementById('helpPanel').classList.remove('active');
 }
 
 // Init
