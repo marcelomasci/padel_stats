@@ -129,8 +129,10 @@
     padding: 6px 12px;
     align-content: center;
   }
-  .stats-area .stat-btn:nth-child(5) {
-    grid-column: 1;
+  .stats-area .stat-btn:nth-child(3) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 3px);
   }
 
   .stat-btn {
@@ -356,7 +358,7 @@
   </div>
 </div>
 
-<!-- Stats: grid 2-2-1, long press to undo -->
+<!-- Stats: grid 2-1-2, long press to undo -->
 <div class="stats-area">
   <button class="stat-btn btn-winner" data-stat="winners">
     <div class="count" id="winners-count">0</div>
@@ -368,9 +370,9 @@
     <div class="label">Rally</div>
     <div class="hint">mantener = restar</div>
   </button>
-  <button class="stat-btn btn-error" data-stat="errors">
-    <div class="count" id="errors-count">0</div>
-    <div class="label">Errores NF</div>
+  <button class="stat-btn btn-ef" data-stat="ef">
+    <div class="count" id="ef-count">0</div>
+    <div class="label">Error Forzado</div>
     <div class="hint">mantener = restar</div>
   </button>
   <button class="stat-btn btn-br" data-stat="br">
@@ -378,9 +380,9 @@
     <div class="label">Bola Reg</div>
     <div class="hint">mantener = restar</div>
   </button>
-  <button class="stat-btn btn-ef" data-stat="ef">
-    <div class="count" id="ef-count">0</div>
-    <div class="label">Error Forzado</div>
+  <button class="stat-btn btn-error" data-stat="errors">
+    <div class="count" id="errors-count">0</div>
+    <div class="label">Errores NF</div>
     <div class="hint">mantener = restar</div>
   </button>
 </div>
