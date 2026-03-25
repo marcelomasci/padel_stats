@@ -271,6 +271,138 @@
     cursor: pointer;
     padding: 4px 8px;
   }
+  .history-item {
+    cursor: pointer;
+  }
+  .history-item:active { opacity: 0.7; }
+
+  /* ── Match Detail Modal ── */
+  .match-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 20;
+    align-items: flex-end;
+  }
+  .match-modal-overlay.active { display: flex; }
+  .match-modal {
+    background: #16213e;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 20px 32px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: slideUp 0.25s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .mm-handle {
+    width: 36px; height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    margin: 0 auto 16px;
+  }
+  .mm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .mm-date { font-size: 0.85rem; color: #888; }
+  .mm-score { font-size: 1.3rem; font-weight: 800; }
+  .mm-result {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-top: 4px;
+    display: inline-block;
+  }
+  .mm-result.win { background: rgba(13,115,119,0.3); color: #5ee6c8; }
+  .mm-result.lose { background: rgba(192,57,43,0.3); color: #ff7b7b; }
+  .mm-result.draw { background: rgba(255,255,255,0.1); color: #aaa; }
+  .mm-section {
+    margin-bottom: 16px;
+  }
+  .mm-section-title {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  .mm-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .mm-kpi {
+    background: #1a1a2e;
+    border-radius: 8px;
+    padding: 8px 4px;
+    text-align: center;
+  }
+  .mm-kpi .kv { font-size: 1.2rem; font-weight: 800; }
+  .mm-kpi .kl { font-size: 0.55rem; color: #666; text-transform: uppercase; margin-top: 2px; }
+  .mm-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mm-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mm-bar-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 32px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .mm-bar-track {
+    flex: 1;
+    height: 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .mm-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+  .mm-bar-count {
+    font-size: 0.7rem;
+    color: #888;
+    width: 20px;
+    text-align: left;
+    flex-shrink: 0;
+  }
+  .mm-sets-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+  .mm-sets-table th {
+    color: #555;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    padding: 4px 6px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .mm-sets-table td {
+    padding: 6px 6px;
+    text-align: center;
+    color: #ccc;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .mm-sets-table td:first-child { text-align: left; color: #888; font-size: 0.7rem; }
 
   /* ── Help Panel ── */
   .help-section {
@@ -419,6 +551,35 @@
     <button class="close-btn" onclick="hideHistory()">✕</button>
   </header>
   <div class="panel-body" id="historyList"></div>
+</div>
+
+<!-- Match Detail Modal -->
+<div class="match-modal-overlay" id="matchModal" onclick="hideMatchDetail(event)">
+  <div class="match-modal" id="matchModalContent">
+    <div class="mm-handle"></div>
+    <div class="mm-header">
+      <div>
+        <div class="mm-date" id="mm-date"></div>
+        <div class="mm-score" id="mm-score"></div>
+        <div id="mm-result"></div>
+      </div>
+    </div>
+
+    <div class="mm-section">
+      <div class="mm-section-title">Resumen</div>
+      <div class="mm-kpis" id="mm-kpis"></div>
+    </div>
+
+    <div class="mm-section">
+      <div class="mm-section-title">Distribución</div>
+      <div class="mm-bars" id="mm-bars"></div>
+    </div>
+
+    <div class="mm-section" id="mm-sets-section">
+      <div class="mm-section-title">Por set</div>
+      <table class="mm-sets-table" id="mm-sets-table"></table>
+    </div>
+  </div>
 </div>
 
 <!-- Help Panel -->
@@ -760,7 +921,7 @@ function showHistory() {
       var bal = controlable > 0 ? buenos - errCtrl : 0;
       var balStr = controlable > 0 ? (bal > 0 ? '+' + bal : '' + bal) : '-';
 
-      return '<div class="history-item">' +
+      return '<div class="history-item" onclick="showMatchDetail(' + i + ', event)">' +
         '<div class="hi-header">' +
           '<span class="hi-date">' + dateStr + '</span>' +
           '<span class="hi-score">' + scoreStr + '</span>' +
@@ -769,9 +930,9 @@ function showHistory() {
         '<div class="hi-details">' +
           '<span class="hi-w">W:' + totals.winners + '</span> · ' +
           '<span class="hi-r">R:' + totals.rally + '</span> · ' +
-          '<span class="hi-e">ENF:' + totals.errors + '</span> · ' +
           '<span class="hi-ef">EF:' + totals.ef + '</span> · ' +
-          '<span class="hi-br">BR:' + totals.br + '</span>' +
+          '<span class="hi-br">BR:' + totals.br + '</span> · ' +
+          '<span class="hi-e">ENF:' + totals.errors + '</span>' +
         '</div>' +
         '<div class="hi-details">' +
           'W/E: ' + we + ' · Ef: ' + eff + ' · Bal: ' + balStr +
@@ -812,6 +973,119 @@ function showHelp() {
 
 function hideHelp() {
   document.getElementById('helpPanel').classList.remove('active');
+}
+
+function showMatchDetail(index, event) {
+  // prevent triggering if click was on delete button
+  if (event && event.target.classList.contains('hi-delete')) return;
+
+  var history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+  var h = history[index];
+  if (!h) return;
+
+  // Date
+  var d = new Date(h.date);
+  var dateStr = d.toLocaleDateString('es-AR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+  document.getElementById('mm-date').textContent = dateStr;
+
+  // Score + result
+  var scoreStr = h.sets.map(function(s) { return s.games.nos + '-' + s.games.ellos; }).join(' / ');
+  document.getElementById('mm-score').textContent = scoreStr;
+  var setsNos = h.sets.filter(function(s) { return s.games.nos > s.games.ellos; }).length;
+  var setsEllos = h.sets.filter(function(s) { return s.games.ellos > s.games.nos; }).length;
+  var resultEl = document.getElementById('mm-result');
+  if (setsNos > setsEllos) {
+    resultEl.innerHTML = '<span class="mm-result win">Victoria</span>';
+  } else if (setsEllos > setsNos) {
+    resultEl.innerHTML = '<span class="mm-result lose">Derrota</span>';
+  } else {
+    resultEl.innerHTML = '<span class="mm-result draw">Empate</span>';
+  }
+
+  // Totals
+  var totals = h.sets.reduce(function(acc, s) {
+    fixStats(s.stats);
+    acc.winners += s.stats.winners;
+    acc.rally += s.stats.rally;
+    acc.errors += s.stats.errors;
+    acc.ef += s.stats.ef;
+    acc.br += s.stats.br;
+    return acc;
+  }, { winners: 0, rally: 0, errors: 0, ef: 0, br: 0 });
+
+  var total = totals.winners + totals.rally + totals.errors + totals.ef + totals.br;
+  var errCtrl = totals.errors + totals.br;
+  var buenos = totals.winners + totals.rally;
+  var controlable = buenos + errCtrl;
+  var eff = controlable > 0 ? (buenos / controlable * 100).toFixed(0) + '%' : '-';
+  var we = errCtrl > 0 ? (totals.winners / errCtrl).toFixed(1) : (totals.winners > 0 ? '∞' : '-');
+  var bal = controlable > 0 ? buenos - errCtrl : 0;
+  var balStr = controlable > 0 ? (bal > 0 ? '+' + bal : '' + bal) : '-';
+  var partOff = total > 0 ? (buenos / total * 100).toFixed(0) + '%' : '-';
+
+  // KPIs
+  document.getElementById('mm-kpis').innerHTML =
+    kpi(total, 'Toques') +
+    kpi(we, 'W/E') +
+    kpi(eff, 'Efectiv.') +
+    kpi(partOff, 'Of/Total');
+
+  // Bars
+  var barData = [
+    { label: 'W', value: totals.winners, color: '#0d7377' },
+    { label: 'R', value: totals.rally, color: '#2c3e80' },
+    { label: 'EF', value: totals.ef, color: '#4a4a6a' },
+    { label: 'BR', value: totals.br, color: '#b5651d' },
+    { label: 'ENF', value: totals.errors, color: '#c0392b' }
+  ];
+  var maxVal = Math.max.apply(null, barData.map(function(b) { return b.value; })) || 1;
+  document.getElementById('mm-bars').innerHTML = barData.map(function(b) {
+    var pct = (b.value / maxVal * 100).toFixed(0);
+    return '<div class="mm-bar-row">' +
+      '<span class="mm-bar-label" style="color:' + b.color + '">' + b.label + '</span>' +
+      '<div class="mm-bar-track"><div class="mm-bar-fill" style="width:' + pct + '%;background:' + b.color + '"></div></div>' +
+      '<span class="mm-bar-count">' + b.value + '</span>' +
+    '</div>';
+  }).join('');
+
+  // Sets table (only if > 1 set)
+  var setsSection = document.getElementById('mm-sets-section');
+  if (h.sets.length > 1) {
+    var thead = '<tr><th>Set</th><th style="color:#5ee6c8">W</th><th style="color:#a0b4ff">R</th><th style="color:#9a9abf">EF</th><th style="color:#e8a54b">BR</th><th style="color:#ff7b7b">ENF</th><th>Ef%</th></tr>';
+    var tbody = h.sets.map(function(s, si) {
+      fixStats(s.stats);
+      var st = s.stats;
+      var sc = st.winners + st.rally + st.errors + st.br;
+      var b = st.winners + st.rally;
+      var e = sc > 0 ? (b / sc * 100).toFixed(0) + '%' : '-';
+      var setScore = s.games.nos + '-' + s.games.ellos;
+      return '<tr>' +
+        '<td>S' + (si+1) + ' <span style="color:#aaa;font-size:0.65rem">(' + setScore + ')</span></td>' +
+        '<td>' + st.winners + '</td>' +
+        '<td>' + st.rally + '</td>' +
+        '<td>' + st.ef + '</td>' +
+        '<td>' + st.br + '</td>' +
+        '<td>' + st.errors + '</td>' +
+        '<td>' + e + '</td>' +
+      '</tr>';
+    }).join('');
+    document.getElementById('mm-sets-table').innerHTML = thead + tbody;
+    setsSection.style.display = '';
+  } else {
+    setsSection.style.display = 'none';
+  }
+
+  document.getElementById('matchModal').classList.add('active');
+}
+
+function kpi(value, label) {
+  return '<div class="mm-kpi"><div class="kv">' + value + '</div><div class="kl">' + label + '</div></div>';
+}
+
+function hideMatchDetail(event) {
+  if (!event || event.target === document.getElementById('matchModal')) {
+    document.getElementById('matchModal').classList.remove('active');
+  }
 }
 
 // Init
